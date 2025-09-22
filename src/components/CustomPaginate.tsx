@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 
 const CustomPaginate = ({ count, pageSize, page = 1, onPrev, onNext, onSelect }: { count: number, pageSize: number, page?: number, onPrev?: () => void, onNext?: () => void, onSelect?: (page: number) => void }) => {
   return (
-    <Pagination.Root count={count} pageSize={pageSize} page={page}>
+    <Pagination.Root display={count > pageSize ? 'block' : 'none'} justifyContent={'center'} count={count} pageSize={pageSize} page={page}>
       <ButtonGroup variant="ghost" size="sm">
         <Pagination.PrevTrigger asChild>
           <IconButton onClick={onPrev}>

@@ -24,13 +24,8 @@ export const useGetBlog = (slug: string) => {
   return useQuery({
     queryKey: ['blog', slug],
     queryFn: async () => {
-      const response = await $axios.get(`/blogs?populate=*&filters[slug][$eq]=${slug}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      const result = await response.data
-      return result
+      const response = await $axios.get(`/blogs?populate=*&filters[slug][$eq]=${slug}`) 
+      return response.data
     }
   })
 }
