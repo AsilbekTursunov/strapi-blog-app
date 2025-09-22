@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useAppDispatch } from "./useStoreSelector"
 import { setUser } from "../store/user.slice"
-import $axios from "@/lib/axios"
+import $axios from "../lib/axios"
 
 
 export const useEnterForm = ({ url, method }: { url: string, method: string }) => {
