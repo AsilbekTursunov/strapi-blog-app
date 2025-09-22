@@ -19,7 +19,7 @@ const ProfilePage = () => {
     <CustomContainer marginY={5} padding={0}>
       <Box className="profile-content" marginY={5}>
         <Box display={'flex'} alignItems={'center'} gap={2}>
-          <Image width={20} height={20} border={'1px solid rgb(132, 132, 132)'} src={'/images/user.png'} borderRadius={"full"} />
+          <Image width={20} height={20} border={'1px solid rgb(132, 132, 132)'} src={user?.image || '/images/user.png'} borderRadius={"full"} />
           <Box>
             <Text>{user?.username}</Text>
             <Text>{user?.email}</Text>

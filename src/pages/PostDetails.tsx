@@ -7,19 +7,21 @@ import moment from 'moment'
 import MarkdownRenderer from '../components/MarkdownRenderer'
 import type { IBlog } from '../types'
 import CustomContainer from '../components/CustomContainer'
+import { useAppSelector } from '../hooks/useStoreSelector'
 
 const PostDetails = () => {
   const { slug } = useParams()
   const { data, isLoading } = useGetBlog(slug as string)
   if (isLoading) return <div>Loading...</div>
   const { createdAt, title, views, image, description, author }: IBlog = data?.data[0]
+  const { user } = useAppSelector((state) => state.user)
   return (
     <CustomContainer>
       <Box maxW={'90%'} margin={'20px auto'} alignItems={'start'} display={'flex'} gap={10} flexDirection={{ base: 'column', md: 'row' }}>
         <Box display={'flex'} marginTop={'40%'} alignItems={'start'} flexDirection={'column'} justifyContent={'center'} gap={3}>
           <Box display={'flex'} flexDirection={'column'} alignItems={'center'} gap={3}>
             <Image
-              src={`${baseUrl}${image.url}`}
+              src={user?.image || '/images/user.png'}
               boxSize="120px"
               borderRadius="full"
               fit="cover"
