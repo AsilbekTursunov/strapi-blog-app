@@ -8,12 +8,12 @@ export const useEnterForm = ({ url, method }: { url: string, method: string }) =
   const dispatch = useAppDispatch()
   return useMutation({
     mutationFn: async (data: any) => {
-      const response = await $axios.post(`/auth/${url}?populate=*`, {
+      const response = await $axios(`/auth/${url}?populate=*`, {
         method: method,
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        data: data
       })
       const result = await response.data
       localStorage.setItem('token', result.jwt)
