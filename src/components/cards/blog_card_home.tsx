@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { baseUrl } from '../../constants'
 import type { IBlog } from '../../types'
 import { Box, Button, Dialog, Heading, Image, Portal, Text } from '@chakra-ui/react'
 import { Eye } from 'lucide-react'
