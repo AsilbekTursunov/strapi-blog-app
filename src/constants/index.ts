@@ -322,7 +322,7 @@ export const data = [
 ]
 
 
-export const baseUrl = 'https://strapi-backend-blog.onrender.com'
+export const baseUrl = 'https://special-horn-8ee9415e94.strapiapp.com'
 // 'https://strapi-backend-blog.onrender.com'
 export const tabs = [
   {

@@ -37,7 +37,7 @@ const BlogCardHome = (blog: IBlog) => {
 
     <Box width={'100%'} display={'flex'} flexDirection={{ base: 'column', md: 'row' }}>
       <Box width={{ base: '100%', md: isProfile ? '30%' : '50%' }} >
-        <Image src={image ? `${baseUrl}${image.url}` : '/images/not-found.webp'} borderRadius={'10px'} width={'100%'} height={{ base: isProfile ? 'fit-content' : '250px', md: isProfile ? 'fit-content' : '388px' }} objectFit={'cover'} imageOrientation={'top'} />
+        <Image src={image ? `${image.url}` : '/images/not-found.webp'} borderRadius={'10px'} width={'100%'} height={{ base: isProfile ? 'fit-content' : '250px', md: isProfile ? 'fit-content' : '388px' }} objectFit={'cover'} imageOrientation={'top'} />
       </Box>
       <Box as={'div'} spaceY={isProfile ? 2 : 5} width={{ base: '100%', md: isProfile ? '70%' : '50%' }} padding={isProfile ? '10px' : '20px'}>
         {isProfile ? <Heading fontSize={'18px'}>{title}</Heading> : <Heading size={{ base: 'xl', md: '2xl', lg: '4xl' }}>{title}</Heading>}

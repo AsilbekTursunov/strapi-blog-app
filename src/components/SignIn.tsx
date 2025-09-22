@@ -13,7 +13,7 @@ import { PasswordInput } from "./ui/password-input"
 import { useEffect } from "react"
 
 const SignIn = ({ onChange, onSuccess }: { onChange: () => void, onSuccess: () => void }) => {
-  const { register, formState: { errors }, handleSubmit } = useForm({
+  const { register, formState: { errors }, handleSubmit, reset } = useForm({
     defaultValues: {
       identifier: '',
       password: ''
@@ -27,6 +27,7 @@ const SignIn = ({ onChange, onSuccess }: { onChange: () => void, onSuccess: () =
   useEffect(() => {
     if (isSuccess) {
       onSuccess()
+      reset()
     }
   }, [isSuccess])
   return (

@@ -13,7 +13,7 @@ import { useEnterForm } from "../hooks/useEnterForm"
 import { useEffect } from "react"
 
 const SignUp = ({ onChange, onSuccess }: { onChange: () => void, onSuccess: () => void }) => {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
 
   // Register
   const { mutate, isPending, error, isSuccess } = useEnterForm({ url: 'local/register', method: 'POST' })
@@ -21,10 +21,11 @@ const SignUp = ({ onChange, onSuccess }: { onChange: () => void, onSuccess: () =
   const onSubmit = (data: any) => {
     mutate(data)
   }
-  
+
   useEffect(() => {
     if (isSuccess) {
       onSuccess()
+      reset()
     }
   }, [isSuccess])
 
