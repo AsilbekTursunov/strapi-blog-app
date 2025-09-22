@@ -6,6 +6,7 @@ import moment from 'moment'
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import UpdateBlog from '../UpdateBlog'
+import $axios from '../../lib/axios'
 
 const BlogCardHome = (blog: IBlog) => {
   const { slug, image, title, description, createdAt, views, author } = blog
@@ -18,8 +19,7 @@ const BlogCardHome = (blog: IBlog) => {
   const { mutate, isPending } = useMutation({
     mutationKey: ['deleteBlog'],
     mutationFn: async () => {
-      await fetch(`/api/blogs/slug/${slug}`, {
-        method: 'DELETE',
+      await $axios.delete(`/blogs/slug/${slug}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
