@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { data } from "../constants";
 import { Box } from "@chakra-ui/react";
 import CustomPaginate from "../components/CustomPaginate";
 import BlogCardHome from "../components/cards/blog_card_home";
@@ -8,7 +7,6 @@ import { useGetBlogs } from "../hooks/useGetBlogs";
 import type { IBlog } from "../types";
 
 const HomePage = () => {
-  const [selected, setSelected] = useState('all')
   const [page, setPage] = useState(1)
   const { data: blogs } = useGetBlogs(page, 6)
   return (
