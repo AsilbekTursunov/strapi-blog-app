@@ -306,3 +306,14 @@
 		grid-template-columns: repeat(1, 1fr);
 	}
 }
+
+/* custom date picker */
+.react-datepicker-wrapper .rw-widget-picker {
+	border: 1px solid #e8e8e8 !important;
+}
+.react-datepicker-wrapper .rw-widget-picker .rw-widget-input {
+	box-shadow: none !important;
+}
+.react-datepicker-wrapper .rw-widget-picker .rw-widget-input .rw-input-addon, .rw-input-addon.rw-picker-btn {
+	border: none !important;
+}

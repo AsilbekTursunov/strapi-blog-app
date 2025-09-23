@@ -5,6 +5,7 @@ import PostDetails from './pages/PostDetails'
 import Footer from './components/Footer'
 import ProfilePage from './pages/ProfilePage'
 import { useAppSelector } from './hooks/useStoreSelector'
+import FormPage from './pages/FormPage'
 const App = () => {
   const { user } = useAppSelector((state) => state.user)
 
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/blog/:slug" element={<PostDetails />} />
         <Route path="/profile/:id" element={user ? <ProfilePage /> : <Navigate to="/" />} />
+        <Route path="/form" element={<FormPage />} />
       </Routes>
       <Footer />
     </div>
