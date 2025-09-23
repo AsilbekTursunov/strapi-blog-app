@@ -10,7 +10,6 @@ interface MultipleInputProps {
 }
 
 const MultipleInput = ({ placeholder, name, onChange, value }: MultipleInputProps) => {
-  // const [selected, setSelected] = useState<string[]>(value)
   const [inputValue, setInputValue] = useState<string>("")
   return (
     <Box display={"flex"} alignItems={{ base: "flex-start", md: "center" }} gap={2} width={"full"}>

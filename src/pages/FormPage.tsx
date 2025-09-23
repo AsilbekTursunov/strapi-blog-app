@@ -7,7 +7,6 @@ import CustomSelect from "../components/CustomSelect"
 import MultipleInput from "../components/MultipleInput"
 import { PasswordInput } from "../components/ui/password-input"
 import { z } from "zod"
-import { LuFileImage } from "react-icons/lu"
 
 const gender = createListCollection({
   items: [
