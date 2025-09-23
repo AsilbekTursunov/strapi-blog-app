@@ -7,6 +7,7 @@ import CustomSelect from "../components/CustomSelect"
 import MultipleInput from "../components/MultipleInput"
 import { PasswordInput } from "../components/ui/password-input"
 import { z } from "zod"
+import { useState } from "react"
 
 const gender = createListCollection({
   items: [
@@ -61,6 +62,7 @@ const schema = z.object({
 
 
 const FormPage = () => {
+  const [image, setImage] = useState<string>("")
   const { register, handleSubmit, setError, formState: { defaultValues, errors }, control, reset } = useForm<z.infer<typeof schema>>({
     defaultValues: {
       firstName: "",
@@ -86,34 +88,36 @@ const FormPage = () => {
     }
     console.log(data)
   }
- 
+
   return (
     <CustomContainer>
 
       <Box width={'full'} marginY={5} spaceY={5}>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
           <Stack gap="4" align="flex-start" >
-
             {/* profile image upload */}
-            <Field.Root invalid={!!errors.image} width="full" display={'flex'} alignItems={'center'} flexDirection={{ base: 'column', md: 'row-reverse' }} gap={2}>
-              <Controller
-                control={control}
-                name="image"
-                rules={{ required: "Image is required" }}
-                render={({ field }) => (
-                  <Box display={'flex'} width={'full'} alignItems={'center'} gap={2}>
-                    <Image src={field.value ? URL.createObjectURL(field.value) : "/images/user.png"} width={100} height={100} borderRadius="full" />
+            <Field.Root invalid={!!errors.image} width="full" gap={2}>
+              <Box width={'full'} display={'flex'} alignItems={'center'} gap={2}>
+                <Image src={image ? image : "/images/user.png"} width={100} height={100} borderRadius="full" />
+                <Controller
+                  control={control}
+                  name="image"
+                  rules={{ required: "Image is required" }}
+                  render={({ field }) => (
                     <FileUpload.Root accept="image/*" flex={1}>
-                      <FileUpload.HiddenInput {...register('image')} type='file' name='image' onChange={(value) => field.onChange(value.target.files?.[0])} />
+                      <FileUpload.HiddenInput {...register('image')} type='file' name='image' onChange={(value) => {
+                        field.onChange(value.target.files?.[0])
+                        setImage(URL.createObjectURL(value.target.files?.[0]!))
+                      }} />
                       <FileUpload.Trigger asChild>
                         <Button variant="ghost" border={'1px solid rgb(214, 214, 214)'} borderRadius={'10px'}>
                           Upload Images
                         </Button>
                       </FileUpload.Trigger>
                     </FileUpload.Root>
-                  </Box>
-                )}
-              />
+                  )}
+                />
+              </Box>
               <Field.ErrorText>{String(errors?.image?.message)}</Field.ErrorText>
             </Field.Root>
             {/* first name */}
