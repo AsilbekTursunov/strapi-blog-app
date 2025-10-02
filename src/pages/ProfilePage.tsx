@@ -1,12 +1,12 @@
-import CustomContainer from "../components/CustomContainer"
 import { Box, Image, Text } from "@chakra-ui/react"
-import { useAppSelector } from "../hooks/useStoreSelector"
-import { useGetUserBlogs } from "../hooks/useGetBlogs"
-import type { IBlog } from "../types"
+import { useState } from "react"
 import BlogCardHome from "../components/cards/blog_card_home"
 import CreateBlog from "../components/CreateBlog"
-import { useState } from "react"
+import CustomContainer from "../components/CustomContainer"
 import CustomPaginate from "../components/CustomPaginate"
+import { useGetUserBlogs } from "../hooks/useGetBlogs"
+import { useAppSelector } from "../hooks/useStoreSelector"
+import type { IBlog } from "../types"
 
 const ProfilePage = () => {
   const [page, setPage] = useState(1)
@@ -19,7 +19,7 @@ const ProfilePage = () => {
     <CustomContainer marginY={5} padding={0}>
       <Box className="profile-content" marginY={5}>
         <Box display={'flex'} alignItems={'center'} gap={2}>
-          <Image width={20} height={20} border={'1px solid rgb(132, 132, 132)'} src={user?.image || '/images/user.png'} borderRadius={"full"} />
+          <Image width={20} height={20} border={'1px solid rgb(132, 132, 132)'} src={'/images/user.png'} borderRadius={"full"} />
           <Box>
             <Text>{user?.username}</Text>
             <Text>{user?.email}</Text>

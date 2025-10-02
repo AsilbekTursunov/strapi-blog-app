@@ -3,7 +3,6 @@ import { useAppDispatch } from '../hooks/useStoreSelector'
 import { useQuery } from '@tanstack/react-query'
 import { setUser } from '../store/user.slice'
 import type { IArticle } from '../types'
-import { Box, Spinner } from '@chakra-ui/react'
 import $axios from '../lib/axios'
 
 export interface IUser {
@@ -33,7 +32,7 @@ const UserContext = React.createContext<UserContextType | null>(null)
 export const UserContextProvider = ({ children }: UserContextProps) => {
   const dispatch = useAppDispatch()
   const token = localStorage.getItem('token')
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
       if (!token) return null
@@ -49,9 +48,9 @@ export const UserContextProvider = ({ children }: UserContextProps) => {
     enabled: !!token
   })
 
-  if (isLoading) return <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100vh'}>
-    <Spinner />
-  </Box>
+  // if (isLoading) return <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100vh'}>
+  //   <Spinner />
+  // </Box>
   return (
     <UserContext.Provider value={{ user: data, }}>
       {children}

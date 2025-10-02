@@ -1,53 +1,52 @@
+import { Box, createListCollection, Spinner, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { Box } from "@chakra-ui/react";
-import CustomPaginate from "../components/CustomPaginate";
 import BlogCardHome from "../components/cards/blog_card_home";
 import CustomContainer from "../components/CustomContainer";
+import CustomPaginate from "../components/CustomPaginate";
+import CustomSelect from "../components/CustomSelect";
 import { useGetBlogs } from "../hooks/useGetBlogs";
 import type { IBlog } from "../types";
 
+const options = createListCollection({
+  items: [
+    { value: '', label: 'All' },
+    { value: 'javascript', label: 'Javascript' },
+    { value: 'react', label: 'React' },
+    { value: 'node.js', label: 'Node.js' },
+    { value: 'ai', label: 'AI' },
+  ],
+})
+
 const HomePage = () => {
   const [page, setPage] = useState(1)
-  const { data: blogs } = useGetBlogs(page, 6)
+  const [selected, setSelected] = useState('')
+  const { data: blogs, isLoading } = useGetBlogs(page, 6, selected)
+
+
   return (
     <div>
       <CustomContainer padding={0}>
-        {/* <div className="filterbar-container">
-          <div className="filterbar-lists">
-            {tabs.map((tab) => (
-              <Button variant={selected === tab.id ? 'solid' : 'ghost'} onClick={() => setSelected(tab.id)} className={`filterbar-list-item`} colorPalette={selected === tab.id ? 'blue' : 'transparent'}>{tab.title}</Button>
-            ))}
-          </div>
-        </div>
-        <h3 className="section-headline">
-          История последних новостей
-        </h3>
-        <div className="story-container">
-          <div className="story-content-list">
-            {data.map((item) => (
-              <div key={item.id} className="story-content-item">
-                <img src={item.image} alt="story" />
-              </div>
-            ))}
-          </div>
-        </div> */}
         <Box margin="50px 0px" spaceY={5}>
-          {/* <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)', xl: 'repeat(4, 1fr)' }} gap="4">
-            {data.slice((page - 1) * 12, page * 12).map((item) => (
-              <MiniCard key={item.id}   {...item} />
-            ))}
-          </Grid> */}
-          {blogs?.data && <>
+          <Text as="h1" fontSize={20} fontWeight={'bold'}>Home</Text>
+          {!isLoading && <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={2}>
+            <Text fontSize={20} fontWeight={'bold'}>
+              Filter by title
+            </Text>
+            <CustomSelect value={[selected]} title="Filter by title" collection={options} onValueChange={(val) => setSelected(val.value[0])} />
+          </Box>}
+          {isLoading && <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100vh'}>
+            <Spinner role="home_page_loader" />
+          </Box>}
+          {!isLoading && blogs?.data ? <>
             {blogs?.data.map((item: IBlog, key: number) => (
               <BlogCardHome key={key} {...item} />
             ))}
-            <Box display={'flex'} justifyContent={'end'} marginTop={'20px'}>
+            <Box role="pagination_box" display={'flex'} justifyContent={'end'} marginTop={'20px'}>
               <CustomPaginate count={blogs?.meta?.pagination?.total} pageSize={6} onNext={() => setPage(page + 1)} onPrev={() => setPage(page - 1)} onSelect={(page) => setPage(page)} page={blogs?.meta?.pagination?.page} />
             </Box>
-          </>}
+          </> : <Text display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100vh'}>No blogs found</Text>}
         </Box>
       </CustomContainer>
-
     </div>
   )
 }

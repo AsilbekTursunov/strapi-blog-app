@@ -1,3 +1,5 @@
+import { isAxiosError } from "axios";
+
 export const toBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -28,4 +30,15 @@ export function toSlug(title: string) {
 
   // 5. Hammasini kichik harfga o'tkazish (locale bilan kerak bo'lsa .toLowerCase('en'))
   return collapsed.toLowerCase();
+}
+
+export const errorMessage = (error: any) => {
+  if (!error) return ''
+  if (typeof error === 'string') return error
+  if (isAxiosError(error)) {
+    const respMessage = (error.response?.data as any)?.error?.message ?? error.message
+    return Array.isArray(respMessage) ? respMessage.join(', ') : String(respMessage)
+  }
+  if (error instanceof Error) return error.message
+  try { return JSON.stringify(error) } catch { return 'Unknown error' }
 }

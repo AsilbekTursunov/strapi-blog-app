@@ -1,8 +1,8 @@
-import type { IAuthor } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { IAuthUser } from "@/types";
 
 interface IInitialState {
-  user: IAuthor | null,
+  user: IAuthUser | null,
   isLogin: boolean,
   error: string | null
 }
@@ -17,7 +17,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<IAuthUser>) => {
       state.user = action.payload
       state.isLogin = true
     },
@@ -26,7 +26,7 @@ const userSlice = createSlice({
       state.isLogin = false
       localStorage.removeItem('token')
     },
-    setError: (state, action) => {
+    setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload
     }
   }

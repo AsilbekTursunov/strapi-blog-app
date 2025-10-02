@@ -1,14 +1,14 @@
-import { useState } from 'react'
 import { Button, Text } from '@chakra-ui/react'
 import { Bell } from 'lucide-react'
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import CustomModal from '../components/Modal'
 import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
-import { useAppSelector } from '../hooks/useStoreSelector'
 import { tabs } from '../constants'
-import SideBar from './SideBar'
-import { Link, useLocation } from 'react-router-dom'
+import { useAppSelector } from '../hooks/useStoreSelector'
 import CustomContainer from './CustomContainer'
+import SideBar from './SideBar'
 import UserBox from './userBox'
 const Navbar = () => {
   const [openModal, setOpenModal] = useState(false)

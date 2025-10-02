@@ -5,9 +5,9 @@ import { Box } from '@chakra-ui/react'
 
 const CustomModal = ({ open, onClose, children }: { open: boolean, onClose: () => void, children: React.ReactNode }) => {
   return (
-    <div className={`modal-wrapper ${open ? 'block' : 'hidden'}`}>
+    <div role='modalbox' className={`modal-wrapper ${open ? 'block' : 'hidden'}`}>
       <Box width={{ base: '90%', md: '40%' }} position={'relative'} bg="#fff" p={7} borderRadius={10}>
-        <Button _hover={{ backgroundColor: 'transparent' }} padding={0} variant={'outline'} borderRadius={'full'} position={'absolute'} top={-10} right={-10} onClick={onClose}><X color="#fff" size={20} /></Button>
+        <Button role='modalbox_close' _hover={{ backgroundColor: 'transparent' }} padding={0} variant={'outline'} borderRadius={'full'} position={'absolute'} top={-10} right={-10} onClick={onClose}><X color="#fff" size={20} /></Button>
         {children}
       </Box>
     </div>

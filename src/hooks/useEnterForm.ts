@@ -8,7 +8,7 @@ export const useEnterForm = ({ url, method }: { url: string, method: string }) =
   const dispatch = useAppDispatch()
   return useMutation({
     mutationFn: async (data: any) => {
-      const response = await $axios(`/auth/${url}?populate=*`, {
+      const response = await $axios(`/auth/${url}`, {
         method: method,
         headers: {
           'Content-Type': 'application/json'

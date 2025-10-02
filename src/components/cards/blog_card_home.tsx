@@ -1,15 +1,15 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { IBlog } from '../../types'
 import { Box, Button, Dialog, Heading, Image, Portal, Text } from '@chakra-ui/react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Eye } from 'lucide-react'
 import moment from 'moment'
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import UpdateBlog from '../UpdateBlog'
 import $axios from '../../lib/axios'
+import type { IBlog } from '../../types'
+import UpdateBlog from '../UpdateBlog'
 
 const BlogCardHome = (blog: IBlog) => {
-  const { slug, image, title, description, createdAt, views, author } = blog
+  const { slug, image, title, description, createdAt, views, author, documentId } = blog
   const [remove, setRemove] = useState(false)
   const pathname = useLocation()
   const isProfile = pathname.pathname.includes('profile')
@@ -34,7 +34,7 @@ const BlogCardHome = (blog: IBlog) => {
 
   return (
 
-    <Box width={'100%'} display={'flex'} flexDirection={{ base: 'column', md: 'row' }}>
+    <Box role='blog_card' width={'100%'} display={'flex'} flexDirection={{ base: 'column', md: 'row' }}>
       <Box width={{ base: '100%', md: isProfile ? '30%' : '50%' }} >
         <Image src={image ? `${image.url}` : '/images/not-found.webp'} borderRadius={'10px'} width={'100%'} height={{ base: isProfile ? 'fit-content' : '250px', md: isProfile ? 'fit-content' : '388px' }} objectFit={'cover'} imageOrientation={'top'} />
       </Box>
@@ -47,14 +47,14 @@ const BlogCardHome = (blog: IBlog) => {
         </Box>
         <Text marginY={4} hyphens={'auto'} lineClamp={4} lineHeight={isProfile ? '18px' : '32px'} fontSize={isProfile ? '12px' : { base: '14px', md: '18px' }}>{description}</Text>
         <Box display={'flex'} gap={4} alignItems={'center'}>
-          <Link to={`/blog/${slug}`}>
+          <Link to={`/blog/${documentId}`}>
             <Button width={{ base: '100%', md: 'fit-content' }} colorPalette={'blue'}>
               Читать
             </Button>
           </Link>
           {isProfile && (
             <>
-              <Button width={{ base: '100%', md: 'fit-content' }} colorPalette={'red'} onClick={() => setRemove(true)}>
+              <Button role="delete" width={{ base: '100%', md: 'fit-content' }} colorPalette={'red'} onClick={() => setRemove(true)}>
                 Удалить
               </Button>
               <UpdateBlog blog={blog} />

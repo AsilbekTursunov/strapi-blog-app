@@ -1,16 +1,15 @@
 import { Box, Button, Image, Menu, Portal, Text } from '@chakra-ui/react'
-import { useAppDispatch, useAppSelector } from '../hooks/useStoreSelector'
-import { setLogout } from '../store/user.slice'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../hooks/useStoreSelector'
+import { setLogout } from '../store/user.slice'
 
 const UserBox = () => {
-  const { user } = useAppSelector((state) => state.user)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   return (
     <>
       <Menu.Root>
-        <Menu.Trigger asChild>
+        <Menu.Trigger asChild role='user_box'>
           <Box cursor={'pointer'} border={'1px solid rgb(132, 132, 132)'} width={10} height={10} borderRadius={"full"}>
             <Image src="/images/user.png" width={'full'} height={'full'} borderRadius={"full"} />
           </Box>
@@ -18,7 +17,7 @@ const UserBox = () => {
         <Portal>
           <Menu.Positioner>
             <Menu.Content padding={2} display={'flex'} flexDirection={'column'} gap={2}>
-              <Link className="nav_link" to={`/profile/${user?.id}`}>
+              <Link className="nav_link" to={`/profile`}>
                 <Text>Профиль</Text>
               </Link>
               <Link className="nav_link" to="/">

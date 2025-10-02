@@ -2,7 +2,7 @@ import { baseUrl } from '../constants'
 import axios from 'axios'
 
 const $axios = axios.create({
-  baseURL: baseUrl + '/api',
+  baseURL:  process.env.NODE_ENV === 'test' ? '' : baseUrl + '/api',
 })
 
 // $axios.interceptors.response.use(

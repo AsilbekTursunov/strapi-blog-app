@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Field,
   Fieldset,
@@ -7,13 +8,14 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react"
-import { useForm } from "react-hook-form"
-import { PasswordInput } from "./ui/password-input"
-import { useEnterForm } from "../hooks/useEnterForm"
 import { useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useEnterForm } from "../hooks/useEnterForm"
+import { errorMessage } from "../lib/helpers"
+import { PasswordInput } from "./ui/password-input"
 
 const SignUp = ({ onChange, onSuccess }: { onChange: () => void, onSuccess: () => void }) => {
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm()
 
   // Register
   const { mutate, isPending, error, isSuccess } = useEnterForm({ url: 'local/register', method: 'POST' })
@@ -29,35 +31,43 @@ const SignUp = ({ onChange, onSuccess }: { onChange: () => void, onSuccess: () =
     }
   }, [isSuccess])
 
+  const errorMsg = errorMessage(error)
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Fieldset.Root size="lg" maxW="full" width={'100%'}>
+        <Fieldset.Root role="signup_form" size="lg" maxW="full" width={'100%'}>
           <Stack>
             <Fieldset.Legend>Придумай пароль для входа в аккаунт</Fieldset.Legend>
           </Stack>
           <Fieldset.Content width={'100%'}>
             <Field.Root>
               <Field.Label>Имя</Field.Label>
-              <Input {...register('username', { required: 'Введите свое имя' })} name="username" />
+              <Input role="username" {...register('username', { required: 'Введите свое имя' })} name="username" />
+              {errors.username && <Text role='error' color="red">{String(errors.username.message)}</Text>}
             </Field.Root>
             <Field.Root>
               <Field.Label>Почта</Field.Label>
-              <Input {...register('email', { required: 'Введите свою почту' })} name="email" type="email" />
+              <Input role="email" {...register('email', { required: 'Введите свою почту' })} name="email" type="email" />
+              {errors.email && <Text role='error' color="red">{String(errors.email.message)}</Text>}
             </Field.Root>
             <Field.Root>
               <Field.Label>Пароль</Field.Label>
-              <PasswordInput {...register('password', { required: 'Введите свой пароль' })} name="password" type="password" />
+              <PasswordInput role="password" {...register('password', { required: 'Введите свой пароль', min: 6 })} name="password" type="password" />
+              {errors.password && <Text role='error' color="red">{String(errors.password.message)}</Text>}
             </Field.Root>
           </Fieldset.Content>
-          <Button colorPalette={'blue'} width={"full"} type="submit" alignSelf="flex-start" loading={isPending}>
+          <Button role="signup" colorPalette={'blue'} width={"full"} type="submit" alignSelf="flex-start" loading={isPending}>
             Создать аккаунт
           </Button>
-          {error && <Text color="red">{error.message}</Text>}
+          {!!error && <Text role="register_error" color="red">{errorMsg}</Text>}
 
         </Fieldset.Root>
       </form>
-      <Text textAlign={'center'}>У вас есть аккаунт? <Link onClick={onChange}>Войти</Link></Text>
+      <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <Text textAlign={'center'}>У вас есть аккаунт? </Text>
+        <Link role="signin_link" onClick={onChange}>Войти</Link>
+      </Box>
     </>
   )
 }

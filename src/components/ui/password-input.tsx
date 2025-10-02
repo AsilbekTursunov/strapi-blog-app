@@ -69,6 +69,7 @@ export const PasswordInput = React.forwardRef<
     <InputGroup
       endElement={
         <VisibilityTrigger
+          role={visible ? "eye" : "eye-off"}
           disabled={rest.disabled}
           onPointerDown={(e) => {
             if (rest.disabled) return

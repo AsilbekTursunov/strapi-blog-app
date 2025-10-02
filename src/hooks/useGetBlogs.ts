@@ -1,19 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import $axios from "../lib/axios"
 import { toSlug } from "../lib/helpers"
 import { useAppSelector } from "./useStoreSelector"
-import $axios from "../lib/axios" 
 
 
 
-export const useGetBlogs = (page: number = 1, pageSize: number = 6) => {
+export const useGetBlogs = (page: number = 1, pageSize: number = 6, selected: string = '') => {
   return useQuery({
-    queryKey: ['blogs', page, pageSize],
+    queryKey: ['blogs', page, pageSize, selected],
     queryFn: async () => {
-      const response = await $axios.get(`/blogs?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`)
+      const response = await $axios.get(`/blogs?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}${selected ? `&filters[title][$containsi]=${selected}` : ''}`)
       const result = await response.data
       return result
     },
-    retry: 5,
+    retry: 3,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -24,7 +24,7 @@ export const useGetBlog = (slug: string) => {
   return useQuery({
     queryKey: ['blog', slug],
     queryFn: async () => {
-      const response = await $axios.get(`/blogs?populate=*&filters[slug][$eq]=${slug}`) 
+      const response = await $axios.get(`/blogs/${slug}?populate=*`)
       return response.data
     }
   })

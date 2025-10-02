@@ -37,3 +37,17 @@ export interface IAuthor {
   blogs: IBlog[] | null,
   image: string | null
 }
+
+// Auth API user payload returned from /auth/* endpoints
+export interface IAuthUser {
+  id: number,
+  documentId: string,
+  username: string,
+  email: string,
+  provider: string,
+  confirmed: boolean,
+  blocked: boolean,
+  createdAt: string,
+  updatedAt: string,
+  publishedAt: string,
+}
